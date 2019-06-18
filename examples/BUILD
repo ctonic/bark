@@ -29,6 +29,21 @@ py_test(
 )
 
 py_test(
+  name = "rrt_one_agent",
+  srcs = ["rrt_one_agent.py"],
+  data = ['//python:bark.so',
+          '//modules/runtime/tests:xodr_data',
+          ':params'],
+  imports = ['../python/'],
+  deps = ["//modules/runtime/commons:parameters",
+          "//modules/runtime/commons:xodr_parser",
+          "//modules/runtime/viewer:pygame_viewer",
+          "//modules/runtime/viewer:matplotlib_viewer",
+          "//modules/runtime/commons:roadgraph_generator",
+          "//modules/runtime:runtime",],
+)
+
+py_test(
   name = "scenario_generation_dump",
   srcs = ["scenario_generation_dump.py"],
   data = ['//python:bark.so',
