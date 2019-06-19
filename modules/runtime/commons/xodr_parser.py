@@ -146,16 +146,25 @@ class XodrParser(object):
             if geometry.find("line") is not None:
                 new_line = {"type": "line"}
                 new_geometry["geometry"] = new_line
-            if geometry.find("spiral") is not None:
+            elif geometry.find("spiral") is not None:
                 new_spiral = {"type": "spiral"}
                 new_spiral["curv_start"] = geometry.find("spiral").get(
                     "curvStart")
                 new_spiral["curv_end"] = geometry.find("spiral").get("curvEnd")
                 new_geometry["geometry"] = new_spiral
-            if geometry.find("arc") is not None:
+            elif geometry.find("arc") is not None:
                 new_arc = {"type": "arc"}
                 new_arc["curvature"] = geometry.find("arc").get("curvature")
                 new_geometry["geometry"] = new_arc
+            elif geometry.find("paramPoly3") is not None:
+                new_poly = geometry.find("paramPoly3").attrib
+                new_poly["type"] = "paramPoly3"
+                new_geometry["geometry"] = new_poly
+            else:
+                # <geometry> has no child tag describing it 
+                # or the type of the child tag is not implemented here -> error
+                raise Exception("""Child tag of <geometry> in the .xodr file
+                                either not found or not implemented!""") 
             new_plan_view["geometries"].append(new_geometry)
         road["plan_view"] = new_plan_view
         return road
