@@ -8,6 +8,7 @@
 import numpy as np
 import time
 import os
+from os.path import expanduser
 from bark.world.agent import *
 from bark.models.behavior import *
 from bark.world import *
@@ -38,7 +39,7 @@ execution_model = ExecutionModelInterpolate(param_server)
 dynamic_model = SingleTrackModel()
 
 # Map Definition
-xodr_parser = XodrParser("../OpenDRIVE/kreuz-frankfurt.xodr") # XodrParser("modules/runtime/tests/data/Crossing8Course.xodr")
+xodr_parser = XodrParser(expanduser("~/Documents/OpenDRIVE/kreuz-frankfurt-2.xodr")) # XodrParser("modules/runtime/tests/data/Crossing8Course.xodr")
 map_interface = MapInterface()
 map_interface.set_open_drive_map(xodr_parser.map)
 map_interface.set_roadgraph(xodr_parser.roadgraph)
