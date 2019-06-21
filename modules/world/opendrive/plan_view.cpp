@@ -65,7 +65,6 @@ void PlanView::calc_arc_position(const float s, float initial_heading, float cur
 
 bool PlanView::add_arc(geometry::Point2d start_point, float heading, float length, float curvature, float s_inc) {
   // add_spiral(start_point, heading, length, curvature, curvature, s_inc);
-
   float dx, dy;
   double x_old = bg::get<0>(start_point), y_old = bg::get<1>(start_point);
   double s = 0.0;
@@ -82,6 +81,37 @@ bool PlanView::add_arc(geometry::Point2d start_point, float heading, float lengt
   }
   
   return true;
+}
+
+bool PlanView::add_paramPoly3(geometry::Point2d start_point, float heading, float length, float aU, float bU, float cU, float dU, float aV, float bV, float cV, float dV, float s_inc) {
+  // see http://www.opendrive.org/docs/OpenDRIVEFormatSpecRev1.4E-DRAFT.pdf page 47
+  // give as two curves u and v in the local u/v coordinate system
+  // u/v is given by the starting coordinates start_point and the heading
+
+  heading = fmod(heading, 2 * M_PI);
+  float p_inc = length / s_inc
+  double p = 0.0
+
+  double x = 0, y = 0
+  double u = 0, v = 0
+
+  do{
+    u = aU + bU * p + cU * p * p + dU * p * p * p
+    v = aV + bV * p + cV * p * p + dV * p * p * p
+    x = u * cos(heading) - v * sin(heading)
+    y = u * sin(heading) + v * cos(heading)
+    reference_line_.add_point(geometry::Point2d(x, y));
+    p += p_inc
+  }while(p <= 1.0)
+
+  if(p != 1.0){
+    p = 1.0
+    u = aU + bU * p + cU * p * p + dU * p * p * p
+    v = aV + bV * p + cV * p * p + dV * p * p * p  
+    x = u * cos(heading) - v * sin(heading)
+    y = u * sin(heading) + v * cos(heading)
+    reference_line_.add_point(geometry::Point2d(x, y));  
+  }
 }
 
 geometry::Line PlanView::create_line(int id, LaneWidth lane_width, float s_inc) {

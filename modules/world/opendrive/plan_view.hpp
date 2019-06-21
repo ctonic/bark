@@ -28,14 +28,19 @@ class PlanView {
   LanePtr create_lane(LanePosition lane_position, LaneWidths lane_widths, float s_inc = 2.0f);
 
   //! setter functions
+  // OpenDRIVE specification: http://www.opendrive.org/docs/OpenDRIVEFormatSpecRev1.5M.pdf
+  // good text explaining line, arc etc.: https://gupea.ub.gu.se/bitstream/2077/23047/1/gupea_2077_23047_1.pdf
   bool add_line(geometry::Point2d start_point, float heading, float length);
 
   bool add_spiral(geometry::Point2d start_point, float heading, float length, float curvStart, float curvEnd, float s_inc = 2.0f);
+  
   bool add_arc(geometry::Point2d start_point, float heading, float length, float curvature, float s_inc = 2.0f);
-
-  bool add_paramPoly3(geometry::Point2d start_point, float heading, float length, float aU, float bU, float cU, float dU, float aV, float bV, float cV, float dV);
-
   void calc_arc_position(const float s, float initial_heading, float curvature, float &dx, float &dy);
+
+  // TODO: add support for the pRange parameter (generalization)
+  // TODO: add function add_poly3
+  bool add_paramPoly3(geometry::Point2d start_point, float heading, float length, float aU, float bU, float cU, float dU, float aV, float bV, float cV, float dV, float s_inc = 0.1f);
+
 
   //! getter functions
   geometry::Line get_reference_line() const { return reference_line_; }

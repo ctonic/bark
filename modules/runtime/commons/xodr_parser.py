@@ -286,7 +286,7 @@ class XodrParser(object):
                 for key in ["aU", "bU", "cU", "dU", "aV", "bV", "cV", "dV"]:
                     p.append(float(geometry["geometry"][key]))
                 new_plan_view.add_paramPoly3(starting_point, heading, length,
-                    *p)
+                    *p) # TODO: pRange
             else:
                 raise Exception("""Geometry type not supported!""") 
         return new_plan_view
@@ -388,12 +388,12 @@ class XodrParser(object):
     def convert_to_map(self, python_map):
         """Loops through python_map and converts it to a cpp map
 
-    Arguments:
-      python_map {dict} -- containing all the map info
+        Arguments:
+        python_map {dict} -- containing all the map info
 
-    Returns:
-      CPP Map -- Map for usage with CPP
-    """
+        Returns:
+        CPP Map -- Map for usage with CPP
+        """
         for road in self.python_map["roads"]:
             new_road = self.create_cpp_road(road)
             self.map.add_road(new_road)
