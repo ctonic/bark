@@ -271,8 +271,7 @@ class XodrParser(object):
                 new_plan_view.add_line(starting_point, heading, length)
 
             elif geometry["geometry"]["type"] == "arc":
-                new_plan_view.add_arc(starting_point, float(geometry["hdg"]),
-                    float(geometry["length"]),
+                new_plan_view.add_arc(starting_point, heading, length,
                     float(geometry["geometry"]["curvature"]),
                     0.25) # TODO: s_inc
 
@@ -285,8 +284,8 @@ class XodrParser(object):
                 p = []
                 for key in ["aU", "bU", "cU", "dU", "aV", "bV", "cV", "dV"]:
                     p.append(float(geometry["geometry"][key]))
-                new_plan_view.add_paramPoly3(starting_point, heading, length,
-                    *p) # TODO: pRange
+                params = [starting_point, heading, length, *p, float(0.1)]
+                new_plan_view.add_paramPoly3(*params) # TODO: pRange
             else:
                 raise Exception("""Geometry type not supported!""") 
         return new_plan_view

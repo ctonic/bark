@@ -89,29 +89,31 @@ bool PlanView::add_paramPoly3(geometry::Point2d start_point, float heading, floa
   // u/v is given by the starting coordinates start_point and the heading
 
   heading = fmod(heading, 2 * M_PI);
-  float p_inc = length / s_inc
-  double p = 0.0
+  float p_inc = length / s_inc;
+  double p = 0.0;
 
-  double x = 0, y = 0
-  double u = 0, v = 0
+  double x = 0, y = 0;
+  double u = 0, v = 0;
 
   do{
-    u = aU + bU * p + cU * p * p + dU * p * p * p
-    v = aV + bV * p + cV * p * p + dV * p * p * p
-    x = u * cos(heading) - v * sin(heading)
-    y = u * sin(heading) + v * cos(heading)
+    u = aU + bU * p + cU * p * p + dU * p * p * p;
+    v = aV + bV * p + cV * p * p + dV * p * p * p;
+    x = u * cos(heading) - v * sin(heading);
+    y = u * sin(heading) + v * cos(heading);
     reference_line_.add_point(geometry::Point2d(x, y));
-    p += p_inc
-  }while(p <= 1.0)
+    p += p_inc;
+  }while(p <= 1.0);
 
   if(p != 1.0){
-    p = 1.0
-    u = aU + bU * p + cU * p * p + dU * p * p * p
-    v = aV + bV * p + cV * p * p + dV * p * p * p  
-    x = u * cos(heading) - v * sin(heading)
-    y = u * sin(heading) + v * cos(heading)
+    p = 1.0;
+    u = aU + bU * p + cU * p * p + dU * p * p * p;
+    v = aV + bV * p + cV * p * p + dV * p * p * p;  
+    x = u * cos(heading) - v * sin(heading);
+    y = u * sin(heading) + v * cos(heading);
     reference_line_.add_point(geometry::Point2d(x, y));  
   }
+
+  return true;
 }
 
 geometry::Line PlanView::create_line(int id, LaneWidth lane_width, float s_inc) {

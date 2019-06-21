@@ -22,7 +22,8 @@ void python_opendrive(py::module m) {
       .def("add_spiral", &PlanView::add_spiral, "Add spiral to planview")
       .def("add_arc", &PlanView::add_arc, "Add arc to planview")
       .def("get_reference_line", &PlanView::get_reference_line, "Return as numpy array")
-      .def("create_lane", &PlanView::create_lane, "Creates lane with offset");
+      .def("create_lane", &PlanView::create_lane, "Creates lane with offset")
+      .def("add_paramPoly3", &PlanView::add_paramPoly3, "Add parametric cubic curve to planview");
 
   py::class_<LinkInfo>(m, "LinkInfo")
       .def(py::init<>())
