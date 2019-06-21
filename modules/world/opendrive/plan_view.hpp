@@ -33,6 +33,8 @@ class PlanView {
   bool add_spiral(geometry::Point2d start_point, float heading, float length, float curvStart, float curvEnd, float s_inc = 2.0f);
   bool add_arc(geometry::Point2d start_point, float heading, float length, float curvature, float s_inc = 2.0f);
 
+  bool add_paramPoly3(geometry::Point2d start_point, float heading, float length, float aU, float bU, float cU, float dU, float aV, float bV, float cV, float dV);
+
   void calc_arc_position(const float s, float initial_heading, float curvature, float &dx, float &dy);
 
   //! getter functions

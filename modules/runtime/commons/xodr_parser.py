@@ -31,15 +31,15 @@ class XodrParser(object):
     def load_xodr(self, file_name):
         """Function that loads XODR and returns root node of
 
-    Arguments:
-      file_name {[string]} -- [File name of XODR]
+        Arguments:
+        file_name {[string]} -- [File name of XODR]
 
-    Raises:
-      TypeError -- [If the file could be parsed]
+        Raises:
+        TypeError -- [If the file could be parsed]
 
-    Returns:
-      [etree] -- [Returns the root node of the etree]
-    """
+        Returns:
+        [etree] -- [Returns the root node of the etree]
+        """
         with self.load_file(file_name) as xodr_file:
             parsed_xodr_file = etree.parse(xodr_file).getroot()
             if not etree.iselement(parsed_xodr_file):
@@ -80,7 +80,6 @@ class XodrParser(object):
         new_lane_width["c"] = 0.0
         new_lane_width["d"] = 0.0
         return new_lane_width
-
 
     def parse_lane(self, lanes, lane_section):
         # previous or next polynoamial
@@ -138,11 +137,14 @@ class XodrParser(object):
         new_plan_view["geometries"] = []
         for geometry in geometries:
             new_geometry = {}
+
+            # the following params are common to all 4/5 geometric elements
             new_geometry["s"] = geometry.get("s")
             new_geometry["x"] = geometry.get("x")
             new_geometry["y"] = geometry.get("y")
             new_geometry["hdg"] = geometry.get("hdg")
             new_geometry["length"] = geometry.get("length")
+
             if geometry.find("line") is not None:
                 new_line = {"type": "line"}
                 new_geometry["geometry"] = new_line
@@ -157,8 +159,14 @@ class XodrParser(object):
                 new_arc["curvature"] = geometry.find("arc").get("curvature")
                 new_geometry["geometry"] = new_arc
             elif geometry.find("paramPoly3") is not None:
+                # paramPoly
+                # see http://www.opendrive.org/docs/OpenDRIVEFormatSpecRev1.4E-DRAFT.pdf
+                # page 47
                 new_poly = geometry.find("paramPoly3").attrib
                 new_poly["type"] = "paramPoly3"
+                # Check that all parameters are there
+                for key in ["aU", "bU", "cU", "dU", "aV", "bV", "cV", "dV"]:
+                    assert key in new_poly.keys(), "Inside a paramPoly3 tag: tags missing"
                 new_geometry["geometry"] = new_poly
             else:
                 # <geometry> has no child tag describing it 
@@ -233,12 +241,12 @@ class XodrParser(object):
     def parse_xml(self, xodr_obj):
         """Imports the XODR file to python
 
-    Arguments:
-      xodr_obj {etree} -- containing map information
+        Arguments:
+        xodr_obj {etree} -- containing map information
 
-    Returns:
-      python dict -- containing all neccessary map information
-    """
+        Returns:
+        python dict -- containing all neccessary map information
+        """
         self.parse_header(xodr_obj.find("header"))
         self.python_map["roads"] = []
         self.python_map["junctions"] = []
@@ -256,20 +264,31 @@ class XodrParser(object):
         for geometry in plan_view["geometries"]:
             starting_point = Point2d(
                 float(geometry["x"]), float(geometry["y"]))
+            heading = float(geometry["hdg"])
+            length = float(geometry["length"])
+
             if geometry["geometry"]["type"] == "line":
-                new_plan_view.add_line(starting_point, float(geometry["hdg"]),
-                                       float(geometry["length"]))
-            if geometry["geometry"]["type"] == "arc":
+                new_plan_view.add_line(starting_point, heading, length)
+
+            elif geometry["geometry"]["type"] == "arc":
                 new_plan_view.add_arc(starting_point, float(geometry["hdg"]),
-                                      float(geometry["length"]),
-                                      float(geometry["geometry"]["curvature"]),
-                                      0.25) # TODO: s_inc
-            if geometry["geometry"]["type"] == "spiral":
-                new_plan_view.add_spiral(
-                    starting_point, float(geometry["hdg"]),
                     float(geometry["length"]),
+                    float(geometry["geometry"]["curvature"]),
+                    0.25) # TODO: s_inc
+
+            elif geometry["geometry"]["type"] == "spiral":
+                new_plan_view.add_spiral(starting_point, heading, length,
                     float(geometry["geometry"]["curv_start"]),
                     float(geometry["geometry"]["curv_end"]), 2) # TODO: s_inc
+
+            elif geometry["geometry"]["type"] == "paramPoly3":
+                p = []
+                for key in ["aU", "bU", "cU", "dU", "aV", "bV", "cV", "dV"]:
+                    p.append(float(geometry["geometry"][key]))
+                new_plan_view.add_paramPoly3(starting_point, heading, length,
+                    *p)
+            else:
+                raise Exception("""Geometry type not supported!""") 
         return new_plan_view
 
     def create_cpp_road_link(self, link):
