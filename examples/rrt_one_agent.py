@@ -39,18 +39,26 @@ execution_model = ExecutionModelInterpolate(param_server)
 dynamic_model = SingleTrackModel()
 
 # Map Definition
-xodr_parser = XodrParser(expanduser("~/Documents/OpenDRIVE/kreuz-frankfurt-2.xodr")) # XodrParser("modules/runtime/tests/data/Crossing8Course.xodr")
+xodr_parser = XodrParser(expanduser("~/Documents/OpenDRIVE/kreuz-frankfurt.xodr"))
+# xodr_parser = XodrParser("modules/runtime/tests/data/Crossing8Course.xodr")
 map_interface = MapInterface()
 map_interface.set_open_drive_map(xodr_parser.map)
 map_interface.set_roadgraph(xodr_parser.roadgraph)
 world.set_map(map_interface)
 
+print("DEBUG: Map definition finished")
 # Agent Definition
 agent_2d_shape = CarLimousine()
-init_state = np.array([0, -11, -8, 3.14*3.0/4.0, 10/3.6])
+# init_state = np.array([0, -11, -8, 3.14*3.0/4.0, 10/3.6])
+init_state = np.array([0, -1005, -1533, 0, 0])
+# x -1005
+# y -1533
 agent_params = param_server.addChild("agent1")
 goal_polygon = Polygon2d([0, 0, 0],[Point2d(-1,-1),Point2d(-1,1),Point2d(1,1), Point2d(1,-1)])
 goal_polygon = goal_polygon.translate(Point2d(-191.789,-50.1725))
+
+print("DEBUG: Now defining agent")
+
 agent = Agent(init_state,
               behavior_model,
               dynamic_model,
@@ -61,11 +69,12 @@ agent = Agent(init_state,
               map_interface)
 world.add_agent(agent)
 
+print("DEBUG: Agent definition finished")
 # viewer
 
 viewer = PygameViewer(params=param_server,
-                      x_range=[-50, 50],
-                      y_range=[-50, 50],
+                      x_range=[-500, 500],
+                      y_range=[-500, 500],
                       follow_agent_id=agent.id,
                       screen_dims=[500, 500])
 
@@ -78,6 +87,8 @@ sim_step_time = param_server["simulation"]["step_time",
 sim_real_time_factor = param_server["simulation"]["real_time_factor",
                                                   "execution in real-time or faster",
                                                   100]
+
+print("DEBUG: Beginning loop")
 
 for _ in range(0, 100):
     viewer.clear()

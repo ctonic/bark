@@ -94,6 +94,10 @@ class XodrParser(object):
             new_lane["id"] = id
             new_lane["type"] = lane.get("type")
             new_lane["level"] = lane.get("level")
+
+            # Debug
+            new_lane["link"] = []
+            
             if lane.find("link") is not None:
                 new_lane["link"] = self.parse_lane_link(lane.find("link"))
             if lane.find("roadMark") is not None:
