@@ -21,6 +21,7 @@ cc_binary(
     "//modules/commons/params:params",
     "//modules/models/execution/interpolation:interpolation",
     "//modules/models/behavior/constant_velocity:constant_velocity",
+    "//modules/models/behavior/rrt_star:rrt_star",
     "//modules/models/behavior/motion_primitives:motion_primitives",
     "//modules/models/execution/mpc:mpc",
     "//modules/runtime/viewer:viewer",

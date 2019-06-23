@@ -9,6 +9,7 @@
 #include "modules/world/objects/object.hpp"
 #include "modules/models/behavior/behavior_model.hpp"
 #include "modules/models/behavior/constant_velocity/constant_velocity.hpp"
+#include "modules/models/behavior/rrt_star/rrt_star.hpp"
 #include "modules/models/dynamic/single_track.hpp"
 #include "modules/models/execution/interpolation/interpolate.hpp"
 #include "modules/world/goal_definition/goal_definition.hpp"
@@ -78,6 +79,7 @@ void python_agent(py::module m)
                 throw std::runtime_error("Invalid agent state!");
 
             using modules::models::behavior::BehaviorConstantVelocity;
+            using modules::models::behavior::BehaviorRRTStar;
             using modules::models::dynamic::SingleTrackModel;
             using modules::models::execution::ExecutionModelInterpolate;
             using modules::world::map::LocalMap;
