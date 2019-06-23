@@ -22,7 +22,7 @@ from modules.runtime.viewer.pygame_viewer import PygameViewer
 from modules.runtime.viewer.matplotlib_viewer import MPViewer
 # from modules.runtime.viewer.panda3d_viewer import Panda3dViewer
 from modules.runtime.commons.xodr_parser import XodrParser
-
+test
 
 # Parameters Definitions
 param_server = ParameterServer(filename="examples/params/od8_const_vel_one_agent.json")
@@ -33,12 +33,12 @@ param_server = ParameterServer(filename="examples/params/od8_const_vel_one_agent
 world = World(param_server)
 
 # Model Definitions
-behavior_model = BehaviorConstantVelocity(param_server)
+behavior_model = BehaviorRRTStar(param_server)
 execution_model = ExecutionModelInterpolate(param_server)
 dynamic_model = SingleTrackModel()
 
 # Map Definition
-xodr_parser = XodrParser("../OpenDRIVE/kreuz-frankfurt.xodr") # XodrParser("modules/runtime/tests/data/Crossing8Course.xodr")
+xodr_parser = XodrParser("modules/runtime/tests/data/Crossing8Course.xodr")
 map_interface = MapInterface()
 map_interface.set_open_drive_map(xodr_parser.map)
 map_interface.set_roadgraph(xodr_parser.roadgraph)
