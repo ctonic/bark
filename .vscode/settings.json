@@ -105,7 +105,6 @@
     "bazel-testlogs": true,
     "third_party": false
   },
-  "python.pythonPath": "/usr/bin/python3",
   "python.linting.pylintEnabled": true,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
