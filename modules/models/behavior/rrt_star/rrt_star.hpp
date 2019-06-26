@@ -29,6 +29,9 @@ class BehaviorRRTStar : public BehaviorModel {
                  const ObservedWorld& observed_world);
 
   virtual BehaviorModel *Clone() const;
+
+ private:
+    geometry::Point2d sample_point();
 };
 
 inline BehaviorModel *BehaviorRRTStar::Clone() const {

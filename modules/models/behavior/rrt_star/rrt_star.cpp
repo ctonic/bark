@@ -6,9 +6,13 @@
 
 #include "modules/models/behavior/rrt_star/rrt_star.hpp"
 #include "modules/world/observed_world.hpp"
+#include "modules/world/objects/agent.hpp"
 
 namespace modules {
 namespace models {
+
+// goal test with: bool goal_definition.AtGoal(const modules::geometry::Polygon& agent_shape)
+// collide test with: modules::geometry::Collide
 
 dynamic::Trajectory behavior::BehaviorRRTStar::Plan(
     float delta_time,
@@ -17,10 +21,15 @@ dynamic::Trajectory behavior::BehaviorRRTStar::Plan(
   using namespace dynamic;
 
   //! TODO(@fortiss): parameters
-  const int num_traj_time_points = 100;
-  dynamic::Trajectory traj(num_traj_time_points, int(StateDefinition::MIN_STATE_SIZE));
+  const int num_traj_time_points = 100; // number of points of the planned trajectory
+  dynamic::Trajectory traj(num_traj_time_points, // Rows
+          int(StateDefinition::MIN_STATE_SIZE)); // Columns
   auto const sample_time = delta_time / num_traj_time_points;
 
+  world::objects::Agent agent = observed_world.get_ego_agent(); // get agent
+  world::goal_definition goal_definition = agent.get_goal_definition(); // goal def
+  world::map::MapInterfacePtr map_interface = observed_world.get_map();
+  
   dynamic::State ego_vehicle_state = observed_world.get_ego_state();
   
   // select state and get p0
