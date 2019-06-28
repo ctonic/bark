@@ -37,7 +37,7 @@ execution_model = ExecutionModelInterpolate(param_server)
 dynamic_model = SingleTrackModel()
 
 # Map Definition
-xodr_parser = XodrParser("modules/runtime/tests/data/Crossing8Course.xodr")
+xodr_parser = XodrParser("modules/runtime/tests/data/urban_road.xodr")
 map_interface = MapInterface()
 map_interface.set_open_drive_map(xodr_parser.map)
 map_interface.set_roadgraph(xodr_parser.roadgraph)

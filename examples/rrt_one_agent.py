@@ -62,7 +62,7 @@ world.add_agent(agent)
 
 # Add Obstacle
 obstacle1_params = param_server.addChild("obstacle1")
-obstacle1_shape = CarLimousine()
+obstacle1_shape =  Model3d() # CarLimousine()
 obstacle1 = Object(agent_2d_shape, obstacle1_params, obstacle1_shape)
 world.add_object(obstacle1)
 

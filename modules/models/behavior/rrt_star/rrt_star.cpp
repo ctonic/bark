@@ -26,8 +26,8 @@ dynamic::Trajectory behavior::BehaviorRRTStar::Plan(
           int(StateDefinition::MIN_STATE_SIZE)); // Columns
   auto const sample_time = delta_time / num_traj_time_points;
 
-  world::objects::Agent agent = observed_world.get_ego_agent(); // get agent
-  world::goal_definition goal_definition = agent.get_goal_definition(); // goal def
+  std::shared_ptr<const world::objects::Agent> agent = observed_world.get_ego_agent(); // get agent
+  const world::goal_definition::GoalDefinition& goal_definition = agent->get_goal_definition(); // goal def
   world::map::MapInterfacePtr map_interface = observed_world.get_map();
   
   dynamic::State ego_vehicle_state = observed_world.get_ego_state();
