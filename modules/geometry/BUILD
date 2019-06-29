@@ -10,7 +10,7 @@ cc_library(
         "angle.hpp"
     ],
     srcs = [
-        "standard_shapes.cpp"
+        "standard_shapes.cpp",
     ],
     deps = [
 	    "@com_github_eigen_eigen//:eigen",
@@ -18,3 +18,4 @@ cc_library(
     ],
     visibility = ["//visibility:public"],
 )
+
