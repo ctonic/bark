@@ -63,7 +63,7 @@ world.add_agent(agent)
 
 obs1_param=param_server.addChild("obs1")
 obs1_shape=CarLimousine()
-obs1=Object(obs1_shape, obs1_param,Model3d())
+obs1=Object(obs1_shape, obs1_param,Model3d(),Point2d(50,200))
 world.add_object(obs1)
 # viewer
 

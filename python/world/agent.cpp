@@ -101,10 +101,12 @@ void python_agent(py::module m)
       .def(
           py::init<const Polygon &,
           Params *,
-          const Model3D &>(),
+          const Model3D &,
+          const Point2d &>(),
           py::arg("shape"),
           py::arg("params"),
-          py::arg("model_3d") = Model3D())
+          py::arg("model_3d") = Model3D(),
+          py::arg("location")=Point2d(0,0))
       .def("__repr__", [](const Object &a) {
         return "bark.agent.Object";
       })

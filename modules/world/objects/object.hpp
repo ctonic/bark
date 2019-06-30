@@ -22,18 +22,21 @@ class Object : public commons::BaseType {
   friend class world::World;
 
   Object(const geometry::Polygon &shape, commons::Params *params,
-         const geometry::Model3D &model_3d = geometry::Model3D());
+         const geometry::Model3D &model_3d = geometry::Model3D(),
+         const geometry::Point2d &point = geometry::Point2d(0,0));
          
 
   Object(const Object& object) :
     BaseType(object),
     shape_(object.shape_),
+    location_(object.location_),
     model_3d_(object.model_3d_),
     agent_id_(object.agent_id_) {}
 
   virtual ~Object() {}
 
   geometry::Polygon get_shape() const { return shape_; }
+  geometry::Point2d get_location() const {return location_; }
   geometry::Model3D get_model_3d() const { return model_3d_; }
 
   AgentId get_agent_id() const { return agent_id_; }
@@ -45,6 +48,7 @@ class Object : public commons::BaseType {
  private:
   geometry::Polygon shape_;
   geometry::Model3D model_3d_;
+  geometry::Point2d location_;
   AgentId agent_id_;
 
   static AgentId agent_count; 
