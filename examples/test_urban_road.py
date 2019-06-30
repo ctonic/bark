@@ -63,10 +63,15 @@ world.add_agent(agent)
 
 obs1_param=param_server.addChild("obs1")
 obs1_shape=CarLimousine()
-obs1=Object(obs1_shape, obs1_param,Model3d(),Point2d(80,285))
+obs1=Object(obs1_shape, obs1_param,Model3d(),Point2d(49,220))
 world.add_object(obs1)
-# viewer
 
+obs2_param=param_server.addChild("obs2")
+obs2_shape=CarLimousine()
+obs2=Object(obs2_shape, obs2_param,Model3d(),Point2d(52,205))
+world.add_object(obs2)
+
+# viewer
 viewer = PygameViewer(params=param_server,
                       x_range=[-50, 50],
                       y_range=[-50, 50],

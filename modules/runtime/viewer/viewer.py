@@ -91,7 +91,7 @@ class BaseViewer(Viewer):
             pose = np.zeros(3)
             # pybind creates column based vectors, initialization maybe row-based -> we consider both
             location = obstacle.location
-            pose[0], pose[1] = 49,220
+            pose[0], pose[1] = location.x(),location.y()
             # print(pose)
             transformed_polygon = shape.transform(pose)
             self.drawPolygon2d(transformed_polygon, self.color_eval_agents, 1.0)
