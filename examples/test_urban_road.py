@@ -15,6 +15,7 @@ from bark.world.goal_definition import GoalDefinition
 from bark.models.dynamic import *
 from bark.models.execution import *
 from bark.geometry import *
+from bark.geometry import Model3d
 from bark.geometry.standard_shapes import *
 from modules.runtime.commons.parameters import ParameterServer
 from modules.runtime.viewer.pygame_viewer import PygameViewer
@@ -62,7 +63,7 @@ world.add_agent(agent)
 
 obs1_param=param_server.addChild("obs1")
 obs1_shape=CarLimousine()
-obs1=Object(obs1_shape, obs1_param)
+obs1=Object(obs1_shape, obs1_param,Model3d())
 world.add_object(obs1)
 # viewer
 

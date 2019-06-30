@@ -10,6 +10,7 @@
 #include "modules/commons/base_type.hpp"
 #include "modules/geometry/polygon.hpp"
 #include "modules/geometry/model_3d.hpp"
+#include "modules/geometry/commons.hpp"
 
 namespace modules {
 namespace world {
@@ -22,6 +23,7 @@ class Object : public commons::BaseType {
 
   Object(const geometry::Polygon &shape, commons::Params *params,
          const geometry::Model3D &model_3d = geometry::Model3D());
+         
 
   Object(const Object& object) :
     BaseType(object),
