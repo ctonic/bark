@@ -15,7 +15,8 @@ AgentId Object::agent_count = 0;
 Object::Object(const geometry::Polygon& shape,
                commons::Params* params,
                const geometry::Model3D& model_3d,
-               const geometry::Point2d& point) :
+               const geometry::Point2d& point) : 
+               // "Point2d" will be replaced by "State" later
   BaseType(params),
   shape_(shape),
   model_3d_(model_3d),

@@ -88,7 +88,7 @@ sim_real_time_factor = param_server["simulation"]["real_time_factor",
                                                   "execution in real-time or faster",
                                                   1000]
 
-for _ in range(0, 100):
+for _ in range(0, 130):
     viewer.clear()
     world.step(sim_step_time)
     viewer.drawWorld(world)
