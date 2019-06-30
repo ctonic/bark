@@ -75,6 +75,7 @@ class PygameViewer(BaseViewer):
             ])
         pg.draw.lines(self.screen, self.getColor(color), False, point_list, 5)
 
+
     def getColor(self, color):
         if isinstance(color, Viewer.Color):
             return {

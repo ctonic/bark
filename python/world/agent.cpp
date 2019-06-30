@@ -111,5 +111,6 @@ void python_agent(py::module m)
         return "bark.agent.Object";
       })
       .def_property_readonly("shape", &Object::get_shape)
-      .def_property_readonly("id", &Object::get_agent_id);
+      .def_property_readonly("id", &Object::get_agent_id)
+      .def_property_readonly("location", &Object::get_location);
 }

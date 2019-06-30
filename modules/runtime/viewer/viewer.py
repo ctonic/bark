@@ -86,7 +86,15 @@ class BaseViewer(Viewer):
         pass
 
     def drawObstacle(self, obstacle):
-        pass
+        shape = obstacle.shape
+        if isinstance(shape, Polygon2d):
+            pose = np.zeros(3)
+            # pybind creates column based vectors, initialization maybe row-based -> we consider both
+            location = obstacle.location
+            pose[0], pose[1] = 49,220
+            # print(pose)
+            transformed_polygon = shape.transform(pose)
+            self.drawPolygon2d(transformed_polygon, self.color_eval_agents, 1.0)
 
     def getColor(self, color):
         pass
@@ -113,6 +121,9 @@ class BaseViewer(Viewer):
                 color = self.color_other_agents
             self.drawAgent(agent, color)
 
+        for _, obs in world.objects.items():
+            self.drawObstacle(obs)
+
 
     def drawMap(self, map):
         # draw the boundary of each lane
@@ -131,6 +142,7 @@ class BaseViewer(Viewer):
             pose[0] = state[int(StateDefinition.X_POSITION)]
             pose[1] = state[int(StateDefinition.Y_POSITION)]
             pose[2] = state[int(StateDefinition.THETA_POSITION)]
+            # print(pose)
             transformed_polygon = shape.transform(pose)
             self.drawPolygon2d(transformed_polygon, color, 1.0)
 
