@@ -27,7 +27,7 @@ Agent::Agent(const State &initial_state,
         const GoalDefinition& goal_definition,
         const MapInterfacePtr& map_interface,
         const geometry::Model3D &model_3d) :
-Object(shape, params, model_3d,Point2d(0,0)),
+Object(shape, params, model_3d),
 behavior_model_(behavior_model_ptr),
 dynamic_model_(dynamic_model_ptr),
 execution_model_(execution_model),
