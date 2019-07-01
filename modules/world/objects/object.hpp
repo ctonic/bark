@@ -11,32 +11,35 @@
 #include "modules/geometry/polygon.hpp"
 #include "modules/geometry/model_3d.hpp"
 #include "modules/geometry/commons.hpp"
+#include "modules/models/dynamic/dynamic_model.hpp"
 
 namespace modules {
 namespace world {
 class World;
 namespace objects {
 typedef unsigned int AgentId;
+using models::dynamic::State;
+
 class Object : public commons::BaseType {
  public:
   friend class world::World;
 
   Object(const geometry::Polygon &shape, commons::Params *params,
-         const geometry::Model3D &model_3d = geometry::Model3D(),
-         const geometry::Point2d &point = geometry::Point2d(0,0));
+         const State &state,
+         const geometry::Model3D &model_3d = geometry::Model3D());
          
 
   Object(const Object& object) :
     BaseType(object),
     shape_(object.shape_),
-    location_(object.location_),
+    state_(object.state_),
     model_3d_(object.model_3d_),
     agent_id_(object.agent_id_) {}
 
   virtual ~Object() {}
 
   geometry::Polygon get_shape() const { return shape_; }
-  geometry::Point2d get_location() const {return location_; }
+  State get_state() const {return state_; }
   geometry::Model3D get_model_3d() const { return model_3d_; }
 
   AgentId get_agent_id() const { return agent_id_; }
@@ -48,7 +51,7 @@ class Object : public commons::BaseType {
  private:
   geometry::Polygon shape_;
   geometry::Model3D model_3d_;
-  geometry::Point2d location_;
+  State state_;
   AgentId agent_id_;
 
   static AgentId agent_count; 

@@ -88,10 +88,11 @@ class BaseViewer(Viewer):
     def drawObstacle(self, obstacle):
         shape = obstacle.shape
         if isinstance(shape, Polygon2d):
+            state = obstacle.state
             pose = np.zeros(3)
-            # pybind creates column based vectors, initialization maybe row-based -> we consider both
-            location = obstacle.location
-            pose[0], pose[1] = location.x(),location.y()
+            pose[0] = state[int(StateDefinition.X_POSITION)]
+            pose[1] = state[int(StateDefinition.Y_POSITION)]
+            pose[2] = state[int(StateDefinition.THETA_POSITION)]
             # print(pose)
             transformed_polygon = shape.transform(pose)
             self.drawPolygon2d(transformed_polygon, self.color_eval_agents, 1.0)

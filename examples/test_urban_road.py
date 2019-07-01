@@ -63,12 +63,14 @@ world.add_agent(agent)
 
 obs1_param=param_server.addChild("obs1")
 obs1_shape=CarLimousine()
-obs1=Object(obs1_shape, obs1_param,Model3d(),Point2d(49,220))
+obs1_state=np.array([0, 49, 220, 1, 0])
+obs1=Object(obs1_shape, obs1_param,obs1_state)
 world.add_object(obs1)
 
 obs2_param=param_server.addChild("obs2")
 obs2_shape=CarLimousine()
-obs2=Object(obs2_shape, obs2_param,Model3d(),Point2d(52,205))
+obs2_state=np.array([0, 52, 205, 0, 0])
+obs2=Object(obs2_shape, obs2_param,obs2_state)
 world.add_object(obs2)
 
 # viewer
@@ -88,7 +90,7 @@ sim_real_time_factor = param_server["simulation"]["real_time_factor",
                                                   "execution in real-time or faster",
                                                   1000]
 
-for _ in range(0, 130):
+for _ in range(0, 60):
     viewer.clear()
     world.step(sim_step_time)
     viewer.drawWorld(world)

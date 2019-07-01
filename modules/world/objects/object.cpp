@@ -9,18 +9,19 @@
 namespace modules {
 namespace world {
 namespace objects {
+using models::dynamic::State;
 
 AgentId Object::agent_count = 0;
 
 Object::Object(const geometry::Polygon& shape,
                commons::Params* params,
-               const geometry::Model3D& model_3d,
-               const geometry::Point2d& point) : 
+               const State& state,
+               const geometry::Model3D& model_3d) : 
                // "Point2d" will be replaced by "State" later
   BaseType(params),
   shape_(shape),
+  state_(state),
   model_3d_(model_3d),
-  location_(point),
   agent_id_(agent_count++) {}
 
 Object* Object::Clone() const {
