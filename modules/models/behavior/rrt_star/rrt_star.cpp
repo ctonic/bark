@@ -61,5 +61,9 @@ dynamic::Trajectory behavior::BehaviorRRTStar::Plan(
   return traj;
 }
 
+bool behavior::BehaviorRRTStar::point_in_goal(modules::world::goal_definition::GoalDefinition& goal_definition, geometry::Point2d& point) {
+  return geometry::Collide(goal_definition.get_shape(), point);
+}
+
 }  // namespace models
 }  // namespace modules

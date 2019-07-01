@@ -31,7 +31,8 @@ class BehaviorRRTStar : public BehaviorModel {
   virtual BehaviorModel *Clone() const;
 
  private:
-    geometry::Point2d sample_point();
+    geometry::Point2d sample_point(); // samples point from the reachable area
+    bool point_in_goal(modules::world::goal_definition::GoalDefinition& goal_definition, geometry::Point2d& point); // check if point lies in goal polygon
 };
 
 inline BehaviorModel *BehaviorRRTStar::Clone() const {
