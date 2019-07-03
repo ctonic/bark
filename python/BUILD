@@ -18,6 +18,9 @@ cc_binary(
     "//modules/world/map:roadgraph",
     "//modules/world/goal_definition:goal_definition",
     "//modules/world/evaluation:evaluation",
+
+    "//modules/world/evaluation:evaluator_speed_limit",
+
     "//modules/commons/params:params",
     "//modules/models/execution/interpolation:interpolation",
     "//modules/models/behavior/constant_velocity:constant_velocity",

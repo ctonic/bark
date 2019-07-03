@@ -79,3 +79,19 @@ cc_library(
 )
 
 
+
+cc_library(
+    name = "evaluator_speed_limit",
+    hdrs = [
+        "evaluator_speed_limit.hpp"
+    ],
+    deps = [
+        "//modules/world:world",
+        ":base_evaluator",
+        "@boost//:geometry",
+
+    ],
+
+    visibility = ["//visibility:public"],
+)
+

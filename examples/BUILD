@@ -74,6 +74,24 @@ py_test(
           "//modules/runtime/scenario/scenario_generation:scenario_generation"],
 )
 
+
+py_test(
+  name = "labeling_two_agents",
+  srcs = ["labeling_two_agents.py"],
+  data = ['//python:bark.so',
+          '//modules/runtime/tests:xodr_data',
+          ':params'],
+  imports = ['../python/'],
+  deps = ["//modules/runtime/commons:parameters",
+          "//modules/runtime/commons:xodr_parser",
+          "//modules/runtime/viewer:pygame_viewer",
+          "//modules/runtime/viewer:matplotlib_viewer",
+          "//modules/runtime/commons:roadgraph_generator",
+          "//modules/runtime:runtime",],
+)
+
+
+
 filegroup(
     name="scenarios",
     srcs=glob(["scenarios/*.bark_scenarios"]),

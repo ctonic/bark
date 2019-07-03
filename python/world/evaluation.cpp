@@ -9,6 +9,8 @@
 #include "modules/world/evaluation/evaluator_collision_agents.hpp"
 #include "modules/world/evaluation/evaluator_collision_driving_corridor.hpp"
 
+#include "modules/world/evaluation/evaluator_speed_limit.hpp"
+
 namespace py = pybind11;
 using namespace modules::world::evaluation;
 
@@ -40,4 +42,13 @@ void python_evaluation(py::module m)
       .def("__repr__", [](const EvaluatorGoalReached &g) {
         return "bark.world.evaluation.EvaluatorCollisionDrivingCorridor";
       });
+
+   py::class_<EvaluatorSpeedLimit, BaseEvaluator,
+    std::shared_ptr<EvaluatorSpeedLimit> >(m, "EvaluatorSpeedLimit")
+    .def(py::init<const AgentId&, const double>())
+    .def("__repr__", [](const EvaluatorSpeedLimit &g) {
+        return "bark.world.evaluation.EvaluatorSpeedLimit";
+    });
+
+
 }
