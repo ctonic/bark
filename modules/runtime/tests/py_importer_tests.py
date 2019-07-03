@@ -50,7 +50,7 @@ class ImporterTests(unittest.TestCase):
 
 
         plt.axis("equal")
-        plt.show()
+        plt.show(block=False)
 
         # driving corridor calculation test
         #lanes = map_interface.find_nearest_lanes(Point2d(-11,-8),1)
