@@ -79,11 +79,14 @@ agent2 = Agent(init_state2,
                map_interface)
 world.add_agent(agent2)
 
+
 aps = list()
 
 speed_evaluator = EvaluatorSpeedLimit(agent.id, 3)
+goal_evaluator = EvaluatorGoalReached(agent.id)
 
 world.add_evaluator("speed_evaluator",speed_evaluator)
+world.add_evaluator("goal_evaluator",goal_evaluator)
 
 
 viewer = PygameViewer(params=param_server,
@@ -103,10 +106,9 @@ sim_real_time_factor = param_server["simulation"]["real_time_factor",
                                                   100]
 
 def add_aps(info, aps):
-    if(info["speed_evaluator"]):
-        aps.append('valid_speed')
-    else:
-        aps.append('!valid_speed')
+    aps.append('valid_speed') if info["speed_evaluator"] else  aps.append('!valid_speed')
+    aps.append('in_goal') if info["goal_evaluator"] else  aps.append('!in_goal')
+    
 
 
 for _ in range(0, 2000):
